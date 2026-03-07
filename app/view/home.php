@@ -36,31 +36,21 @@ function html_home($lead, $features, $sidebar, $show_articles = true)
 HTML;
         }
 
-        // --- FEATURES ( Articles secondaires ) ---
+        // --- FEATURES (Articles secondaires) ---
         $out .= <<< HTML
         <div class="main-layout">
             <section class="section-features">
                 <h2>À la une cette semaine</h2>
-                <div class="grid-features">
+                <div class="grid-features" id="article-app">
 HTML;
 
+        // Remplace ton foreach PHP par le composant Vue
         foreach ($features as $art) {
             $id = $art['ident_art'] ?? $art['id'];
-            $title = $art['title_art'] ?? $art['title'];
-            $hook = $art['hook_art'] ?? $art['hook'] ?? "";
-            $image_name = $art['image_art'] ?? "default.jpg";
-            $media_path = MEDIA_PATH . $image_name;
+            $title = htmlspecialchars($art['title_art'] ?? $art['title']);
 
-            $out .= <<< HTML
-                    <article class="card-feature">
-                        <h3>{$title}</h3>
-                        <div class="media-feature">
-                            <img src="{$media_path}" alt="{$title}">
-                        </div>
-                        <p>{$hook}</p>
-                        <a href="?page=article&ident_art={$id}" class="read-more">En savoir plus </a>
-                    </article>
-HTML;
+            // On remplace le HTML généré par le composant Vue
+            $out .= "<article-detail :id='{$id}' title='{$title}'></article-detail>";
         }
         $out .= '</div></section>';
 
@@ -74,22 +64,14 @@ HTML;
     }
 
     // --- 3. LA SIDEBAR ( Artciles secondaires) ---
-    $sidebar_items = "";
-    foreach ($sidebar as $index => $art) {
-        $id = $art['ident_art'] ?? $art['id'];
-        $title = $art['title_art'] ?? $art['title'];
-        $hook = $art['hook_art'] ?? $art['hook'] ?? "";
-        $hook_short = limit_words($hook, LIMIT_WORD_SIDEBAR);
-        $class = ($index > 1) ? 'class="hidden"' : '';
 
-        $sidebar_items .= <<< HTML
-            <li {$class}>
-                <a href="?page=article&ident_art={$id}">
-                    <h4>{$title}</h4>
-                    <p>{$hook_short}</p>
-                </a>
-            </li>
-HTML;
+    $sidebar_items = "";
+    foreach ($sidebar as $art) {
+        $id = $art['ident_art'] ?? $art['id'];
+        $title = htmlspecialchars($art['title_art'] ?? $art['title']);
+
+        // Ici aussi, on utilise le composant
+        $sidebar_items .= "<article-detail :id='{$id}' title='{$title}'></article-detail>";
     }
 
     $out .= <<< HTML
@@ -104,6 +86,9 @@ HTML;
             </aside>
         </div> </div> 
 HTML;
-
+    $out .= '
+        <script src="/js/vue.global.js"></script>
+        <script type="module" src="/public/components/app.js"></script>
+    ';
     return $out;
 }

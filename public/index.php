@@ -29,10 +29,17 @@ session_start();
 
 include_mvc_php_files();
 
+
 // select page to load, ie. function to call
 // $page = @$_GET['page'] ?: 'home';
 // making router more universal => using superglobal REQUEST instead of POST or GET
 $page = @$_REQUEST['page'] ?: 'home';
+if (strpos($page, 'api_') === 0) {
+    // On appelle une fonction spécifique pour l'API (ex: api_details)
+    // On n'appelle PAS main_{$page}
+    echo $page();
+    exit; // IMPORTANT : On arrête tout ici, pas de chargement de template
+}
 $main = "main_{$page}";
 echo $main();
 
