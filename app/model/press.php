@@ -42,7 +42,7 @@ function get_press_article($ident)
             return ["error" => "L'ID $ident est invalide pour MySQL. Le range possible est [0 - 2924]."];
         }
 
-        $q = "SELECT * FROM `t_article` WHERE `ident_art` = :ident_art";
+        $q = "SELECT * FROM t_article a JOIN t_reporter r ON a.reporter_art = r.id_rep WHERE a.ident_art = :ident_art";
         $res = db_select_prepare($q, ['ident_art' => $ident]);
 
         if (empty($res)) {

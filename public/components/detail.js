@@ -1,52 +1,76 @@
 export const ArticleDetail = {
-    // Les props sont les données reçues depuis ton HTML (ton PHP)
     props: ['id', 'title'],
 
     data() {
         return {
-            details: null,      // Sera null tant qu'on n'a pas fetch
-            isLoading: false
+            details: null,
+            isLoading: false,
+            erreur_message: null
         };
     },
 
-    // Le template contient ta structure HTML + l'affichage dynamique
     template: `
-        <div class="article-box" @mouseover="fetchDetails">
+        <div class="article-box" @mouseover="fetchDetails" style="border:1px solid #ccc; padding:10px; margin:5px;">
             <h3>{{ title }}</h3>
             
-            <div v-if="isLoading">Chargement des détails...</div>
+            <div v-if="isLoading">Chargement...</div>
             
             <div v-if="details" class="details-box">
-                <p><strong>Date de création :</strong> {{ details.date_creation }}</p>
-                <p><strong>Durée :</strong> {{ details.duree_lecture }} min</p>
+                <p><strong>Date :</strong> {{ details.date_creation }}</p>
                 <p><strong>Catégorie :</strong> {{ details.categorie }}</p>
+                <p><strong>Auteur :</strong> {{ details.auteur }}</p>
             </div>
-            
-            <p v-else-if="!isLoading">Survolez pour voir les détails...</p>
+
+            <div v-if="erreur_message" class="erreur" style="color: red;">
+                ⚠️ {{ erreur_message }}
+            </div>
         </div>
     `,
 
     methods: {
-        async fetchDetails() {
-            // Si on a déjà les détails, on ne fait rien pour ne pas surcharger le serveur
-            if (this.details) return;
+        fetchDetails() {
+            // Si déjà chargé ou en cours, on ne fait rien
+            if (this.details || this.isLoading) return;
 
             this.isLoading = true;
+            this.erreur_message = null;
 
-            try {
-                // Appel vers ton routeur PHP
-                const response = await fetch('index.php?page=api_detail_fetch&id=' + this.id);
+            // 1. Préparation des paramètres comme l'exemple du prof
+            const param = {
+                returnType: "application/json",
+                page: "detail_fetch",
+                id: this.id,
+                vuejs: true
+            };
 
-                // Conversion en JSON
-                const data = await response.json();
+            // 2. Requête FETCH avec POST (comme le prof)
+            fetch(window.location.pathname, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: new URLSearchParams(param).toString(),
+            })
+                .then(response => {
+                    if (!response.ok) throw new Error(`Erreur HTTP : ${response.status}`);
 
-                // Mise à jour de l'état
-                this.details = data;
-            } catch (error) {
-                console.error("Erreur Fetch:", error);
-            } finally {
-                this.isLoading = false;
-            }
+                    const contentType = response.headers.get('content-type');
+                    if (!contentType || !contentType.includes('application/json')) {
+                        throw new Error("La réponse n'est pas au format JSON");
+                    }
+                    return response.json();
+                })
+                .then(json_data => {
+                    // 3. Mise à jour des données
+                    this.details = json_data;
+                })
+                .catch(error => {
+                    this.erreur_message = error.message;
+                    console.error('Problème avec fetch:', error);
+                })
+                .finally(() => {
+                    this.isLoading = false;
+                });
         }
     }
 };

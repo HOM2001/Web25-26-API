@@ -1,14 +1,29 @@
 <?php
+function detail_fetch() {
+    // 1. On récupère l'ID passé dans l'URL par Fetch
+    $id = $_GET['id'] ?? null;
 
-// On récupère l'ID envoyé par le Fetch dans l'URL (?id=...)
-$id = $_GET['id'] ?? null;
+    if (!$id) {
+        echo json_encode(["error" => "ID manquant"]);
+        exit;
+    }
 
-if ($id) {
-    // Rechercher les données dans le model
-    $articleDetails = get_press_article($id);
+    // 2. On utilise TA fonction du modèle
+    $article = get_press_article($id);
 
-    // 2. On prépare la réponse en JSON
+    // 3. On formate la réponse pour Vue.js
+    // On s'assure d'envoyer les clés que le composant attend
+    $response = [
+        'date_creation' => $article['date_art'] ?? $article['date'] ?? 'Inconnue',
+        'categorie'     => $article['name_cat'] ?? $article['category'] ?? 'Général',
+        'duree_lecture' => $article['reading_time'] ?? 5,
+        // Pour le bonus Admin
+        'role'          => $_SESSION['user_role'] ?? 'user',
+        'id'            => $id,
+        'auteur'        => $article['name_rep'] ?? 'Anonyme'
+    ];
+
     header('Content-Type: application/json');
-    echo json_encode($articleDetails);
+    echo json_encode($response);
+    exit;
 }
-exit; // Important : On s'arrête ici, on n'affiche rien d'autre !
