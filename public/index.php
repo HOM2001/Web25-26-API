@@ -35,6 +35,13 @@ $header = @$_REQUEST['returnType'] ?: 'text/html; charset=UTF-8';
 // select page to load, ie. function to call
 // making router more universal => using superglobal REQUEST instead of POST or GET
 $page = @$_REQUEST['page'] ?: 'home';
+if ($page === 'detail_fetch') {
+    // On appelle directement la fonction de ton contrôleur API
+    // On ne veut PAS passer par le header/footer HTML de la page
+    header("Content-Type: application/json");
+    echo detail_fetch();
+    exit; // STOP : on n'exécute pas le reste du script !
+}
 $main = "main_{$page}";
 
 // OUTPUT

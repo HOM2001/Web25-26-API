@@ -10,13 +10,13 @@ export const ArticleDetail = {
     },
 
     template: `
-        <div class="article-box" @mouseover="fetchDetails" style="border:1px solid #ccc; padding:10px; margin:5px;">
+        <div class="article-box" @mouseover="fetchDetails" style="border:1px solid #ccc; padding:10px; margin:5px; cursor: pointer;">
             <h3>{{ title }}</h3>
             
             <div v-if="isLoading">Chargement...</div>
             
-            <div v-if="details" class="details-box">
-                <p><strong>Date :</strong> {{ details.date_creation }}</p>
+            <div v-if="details && !erreur_message" class="details-box">
+                <p><strong>Date :</strong> {{ details.date_art }}</p>
                 <p><strong>Catégorie :</strong> {{ details.categorie }}</p>
                 <p><strong>Auteur :</strong> {{ details.auteur }}</p>
             </div>
@@ -61,6 +61,7 @@ export const ArticleDetail = {
                     return response.json();
                 })
                 .then(json_data => {
+                    console.log(json_data)
                     // 3. Mise à jour des données
                     this.details = json_data;
                 })

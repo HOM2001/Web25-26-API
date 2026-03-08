@@ -1,8 +1,7 @@
 <?php
 function detail_fetch() {
     // 1. On récupère l'ID passé dans l'URL par Fetch
-    $id = $_GET['id'] ?? null;
-
+    $id = $_POST['id'] ?? null;
     if (!$id) {
         echo json_encode(["error" => "ID manquant"]);
         exit;

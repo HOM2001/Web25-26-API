@@ -49,7 +49,7 @@ $out = '<div id="article-app" class="container-home">';
             foreach ($sidebar as $art) {
             $id = $art['ident_art'] ?? $art['id'];
             $title = htmlspecialchars($art['title_art'] ?? $art['title']);
-            $out .= "<li><article-detail :id='{$id}' title='{$title}'></article-detail></li>";
+            $out .= "<article-detail :id='{$id}' title='{$title}'></article-detail>";
             }
             $out .= '</ul></aside>';
 
@@ -59,7 +59,7 @@ $out = '<div id="article-app" class="container-home">';
 // 3. Chargement des scripts
     $out .= '
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-    <script type="module" src="./public/components/app.js"></script>
+    <script type="module" src="./components/app.js"></script>
 ';
 
 return $out;

@@ -17,4 +17,4 @@ const DEFAULT_FONT_COLOR = "black"; // couleur de la police
 
 const DEFAULT_BORDER = "none"; // bordure du main
 
-const SPA_MODE = false; // true , false
+const SPA_MODE = true; // true , false
