@@ -68,8 +68,6 @@ HTML;
         <link rel="stylesheet" href="./css/internal/main.css" />
         <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
         <script src="./js/quirks/QuirksMode.js"></script>
-        <script src="./js/internal/favorite.js"></script>
-        <script src="./js/internal/counter.js"></script>
     </head>
     <body>
     <header>

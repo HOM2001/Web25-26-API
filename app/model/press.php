@@ -42,7 +42,7 @@ function get_press_article($ident)
             return ["error" => "L'ID $ident est invalide pour MySQL. Le range possible est [0 - 2924]."];
         }
         if (SPA_MODE){
-        $q = "SELECT a.*, r.name_rep AS auteur, c.name_cat AS categorie 
+        $q = "SELECT a.date_art AS date_creation, r.name_rep AS auteur, c.name_cat AS categorie 
                 FROM t_article a 
                 JOIN t_reporter r ON a.reporter_art = r.id_rep 
                 JOIN t_category c ON a.fk_category_art = c.id_cat 

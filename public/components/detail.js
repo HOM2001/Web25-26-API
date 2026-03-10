@@ -16,7 +16,7 @@ export const ArticleDetail = {
             <div v-if="isLoading">Chargement...</div>
             
             <div v-if="details && !erreur_message" class="details-box">
-                <p><strong>Date :</strong> {{ details.date_art }}</p>
+                <p><strong>Date :</strong> {{ details.date_creation }}</p>
                 <p><strong>Catégorie :</strong> {{ details.categorie }}</p>
                 <p><strong>Auteur :</strong> {{ details.auteur }}</p>
             </div>
@@ -39,7 +39,7 @@ export const ArticleDetail = {
             const param = {
                 returnType: "application/json",
                 page: "detail_fetch",
-                id: this.id,
+                ident_art: this.id,
                 vuejs: true
             };
 
