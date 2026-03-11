@@ -37,7 +37,10 @@ $out = '<div id="article-app" class="container-home">';
             foreach ($features as $art) {
             $id = $art['ident_art'] ?? $art['id'];
             $title = htmlspecialchars($art['title_art'] ?? $art['title']);
-            $out .= "<article-detail :id='{$id}' title='{$title}'></article-detail>";
+            $image = $art['image_art'] ?? "default.jpg";
+            $media_path_lead = MEDIA_PATH . $image;
+            $hook = htmlspecialchars($art['hook_art'] ?? $art['hook'] ?? "");
+            $out .= "<article-detail :id='{$id}' title='{$title}' image='{$media_path_lead}' hook='$hook' ></article-detail>";
             }
             $out .= '</div></section>';
     }
@@ -49,7 +52,9 @@ $out = '<div id="article-app" class="container-home">';
             foreach ($sidebar as $art) {
             $id = $art['ident_art'] ?? $art['id'];
             $title = htmlspecialchars($art['title_art'] ?? $art['title']);
-            $out .= "<article-detail :id='{$id}' title='{$title}'></article-detail>";
+            $hook = htmlspecialchars($art['hook_art'] ?? $art['hook'] ?? "");
+            $hook_sidebar = limit_words($hook,LIMIT_WORD_SIDEBAR);
+            $out .= "<article-detail :id='{$id}' title='{$title}' hook='$hook_sidebar'></article-detail>";
             }
             $out .= '</ul></aside>';
 

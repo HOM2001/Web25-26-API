@@ -1,5 +1,6 @@
 export const ArticleDetail = {
-    props: ['id', 'title'],
+
+    props: ['id', 'title','image','hook'],
 
     data() {
         return {
@@ -10,9 +11,10 @@ export const ArticleDetail = {
     },
 
     template: `
-        <div class="article-box" @mouseover="fetchDetails" @mouseleave="clearDetails" style="border:1px solid #ccc; padding:10px; margin:5px; cursor: pointer;">
-            <h3>{{ title }}</h3>
-            
+        <div class="grid-features" @mouseover="fetchDetails" @mouseleave="clearDetails" style="border:1px solid #ccc; padding:10px; margin:5px; cursor: pointer;">
+         <h3>{{ title }}</h3>
+           <img v-if="image" :src="image" alt="title" style="width:100%; height:auto;" >
+           <p v-if="hook" class="hook-text">{{ hook }}</p>
             <div v-if="isLoading">Chargement...</div>
             
             <div v-if="details && !erreur_message" class="details-box">
