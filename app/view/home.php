@@ -46,18 +46,25 @@ $out = '<div id="article-app" class="container-home">';
     }
 
     // --- SECTION SIDEBAR ---
-    $out .= '<aside class="section-sidebar">
-        <h3>Dernières minutes</h3>
-        <ul>';
-            foreach ($sidebar as $art) {
-            $id = $art['ident_art'] ?? $art['id'];
-            $title = htmlspecialchars($art['title_art'] ?? $art['title']);
-            $hook = htmlspecialchars($art['hook_art'] ?? $art['hook'] ?? "");
-            $hook_sidebar = limit_words($hook,LIMIT_WORD_SIDEBAR);
-            $out .= "<article-detail :id='{$id}' title='{$title}' hook='$hook_sidebar'></article-detail>";
-            }
-            $out .= '</ul></aside>';
+    $out .= '<aside class="section-sidebar" id="sidebar-app">';
+    $out .= '<h2>Dernières minutes</h2>';
 
+
+
+    foreach ($sidebar as $art) {
+        $id = $art['ident_art'] ?? $art['id'];
+        $title = htmlspecialchars($art['title_art'] ?? $art['title']);
+        $hook = htmlspecialchars($art['hook_art'] ?? $art['hook'] ?? "");
+        $hook_sidebar = limit_words($hook, LIMIT_WORD_SIDEBAR);
+
+        $out .= "<div><article-detail :id='{$id}' title='\"{$title}\"' hook='\"{$hook_sidebar}\"'></article-detail></div>";
+
+    }
+
+
+// Le bouton qui va déclencher l'affichage
+    $out .= '<button id="btn-more" onclick="showMore()">Voir plus</button>';
+    $out .= '</aside>';
     // 2. Fermeture du conteneur VUE
     $out .= '</div>';
 
@@ -65,6 +72,7 @@ $out = '<div id="article-app" class="container-home">';
     $out .= '
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <script type="module" src="./components/app.js"></script>
+    <script src="./js/main.js"></script>
 ';
 
 return $out;

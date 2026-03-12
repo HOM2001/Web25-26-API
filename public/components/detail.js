@@ -1,6 +1,6 @@
 export const ArticleDetail = {
 
-    props: ['id', 'title','image','hook'],
+    props: ['id', 'title', 'image', 'hook'],
 
     data() {
         return {
@@ -11,23 +11,26 @@ export const ArticleDetail = {
     },
 
     template: `
-        <div class="grid-features" @mouseover="fetchDetails" @mouseleave="clearDetails" style="border:1px solid #ccc; padding:10px; margin:5px; cursor: pointer;">
-         <h3>{{ title }}</h3>
-           <img v-if="image" :src="image" alt="title" style="width:100%; height:auto;" >
-           <p v-if="hook" class="hook-text">{{ hook }}</p>
-            <div v-if="isLoading">Chargement...</div>
-            
-            <div v-if="details && !erreur_message" class="details-box">
-                <p><strong>Date :</strong> {{ details.date_creation.split('-').reverse().join('-') }}</p>
-                <p><strong>Catégorie :</strong> {{ details.categorie }}</p>
-                <p><strong>Auteur :</strong> {{ details.auteur }}</p>
-            </div>
-
-            <div v-if="erreur_message" class="erreur" style="color: red;">
-                ⚠️ {{ erreur_message }}
-            </div>
+    <div class= "card-feature" @mouseover="fetchDetails" @mouseleave="clearDetails">
+        <h3>{{ title }}</h3>
+        <a :href="'?page=article&ident_art=' + id" class="card-link">
+        <div class="media-feature" v-if="image">
+            <img :src="image" :alt="title">
         </div>
-    `,
+        
+        <p>{{ hook }}</p>
+
+       <a :href="'?page=article&ident_art=' + id" class="read-more">En savoir plus</a>
+        <div v-if="isLoading">Chargement...</div>
+        
+        <div v-if="details && !erreur_message" class="details-box">
+        <br>
+            <p><strong>Date :</strong> {{ details.date_creation.split('-').reverse().join('-') }}</p>
+            <p><strong>Catégorie :</strong> {{ details.categorie }}</p>
+            <p><strong>Auteur :</strong> {{ details.auteur }}</p>
+        </div>
+    </div>
+`,
 
     methods: {
         fetchDetails() {
