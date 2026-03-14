@@ -23,12 +23,13 @@ export const ArticleDetail = {
        <a :href="'?page=article&ident_art=' + id" class="read-more">En savoir plus</a>
         <div v-if="isLoading">Chargement...</div>
         
-        <div v-if="details && !erreur_message" class="details-box">
-        <br>
-            <p><strong>Date :</strong> {{ details.date_creation.split('-').reverse().join('-') }}</p>
-            <p><strong>Catégorie :</strong> {{ details.categorie }}</p>
-            <p><strong>Auteur :</strong> {{ details.auteur }}</p>
-        </div>
+        <teleport to="#info-display-zone" v-if="details">
+            <div class="fixed-details-content">
+                <span class="badge-cat">{{ details.categorie }}</span>
+                <div class="meta-item"><strong>✍Auteur :</strong> {{ details.auteur }}</div>
+                <div class="meta-item"><strong>Date :</strong> {{ details.date_creation.split('-').reverse().join('/') }}</div>
+            </div>
+        </teleport>
     </div>
 `,
 

@@ -48,8 +48,9 @@ $out = '<div id="article-app" class="container-home">';
     // --- SECTION SIDEBAR ---
     $out .= '<aside class="section-sidebar" id="sidebar-app">';
     $out .= '<h2>Dernières minutes</h2>';
-
-
+    $out .= '<div id="info-display-zone">';
+    $out .= '<p class="placeholder-text">Survolez un article pour voir les détails ici.</p>';
+    $out .= '</div>';
 
     foreach ($sidebar as $art) {
         $id = $art['ident_art'] ?? $art['id'];
@@ -64,6 +65,7 @@ $out = '<div id="article-app" class="container-home">';
 
 // Le bouton qui va déclencher l'affichage
     $out .= '<button id="btn-more" onclick="showMore()">Voir plus</button>';
+    $out .= '<button id="btn-less" class="btn-sidebar" onclick="showLess()" style="display:none;">Voir moins</button>';
     $out .= '</aside>';
     // 2. Fermeture du conteneur VUE
     $out .= '</div>';
@@ -72,7 +74,7 @@ $out = '<div id="article-app" class="container-home">';
     $out .= '
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <script type="module" src="./components/app.js"></script>
-    <script src="./js/main.js"></script>
+    <script src="./js/internal/main.js"></script>
 ';
 
 return $out;

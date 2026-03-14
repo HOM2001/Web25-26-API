@@ -1036,3 +1036,91 @@ main article.main_article {
     color: #f8f9fa;
     margin: 0 5px;
 }
+/* On cache les DIV qui contiennent les article-detail
+   à partir du 3ème (index 2 dans le PHP, donc 3ème enfant).
+   Le 1er enfant est le <h2>, le 2ème est le 1er article.
+*/
+.section-sidebar > div:nth-child(n+5) {
+    display: none;
+}
+
+/* On s'assure que les 2 premiers sont bien visibles */
+.section-sidebar > div:nth-child(1),
+.section-sidebar > div:nth-child(2),
+.section-sidebar > div:nth-child(3),
+.section-sidebar > div:nth-child(4){
+    display: block;
+}
+/* --- LE CONTENEUR FIXE (RÉCEPTEUR) --- */
+#info-display-zone {
+    /* Positionnement fixe sur l'écran */
+    position: fixed;
+    top: 100px;         /* Ajuste selon la hauteur de ton header */
+    right: 20px;        /* Positionné à droite */
+    z-index: 9999;      /* Toujours au-dessus du reste */
+
+    /* Taille et apparence */
+    width: 300px;
+    min-height: 250px;
+    background: #ffffff;
+    border: 2px solid #3498db;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+
+    /* Permet de cliquer à travers le bloc pour ne pas bloquer l'interface */
+    pointer-events: none;
+
+    /* Animation d'apparition */
+    transition: opacity 0.3s ease;
+}
+
+/* Cache le bloc s'il est vide (pas d'article survolé) */
+#info-display-zone:empty {
+    display: none;
+}
+
+/* --- LE CONTENU TÉLÉPORTÉ (FIXED-DETAILS) --- */
+.fixed-details-content {
+    animation: fadeIn 0.4s ease-out;
+    pointer-events: auto; /* Permet de copier le texte dans la bulle si besoin */
+}
+
+.fixed-details-content h4 {
+    margin: 0 0 15px 0;
+    font-size: 1.3rem;
+    color: #2c3e50;
+    border-bottom: 2px solid #3498db;
+    padding-bottom: 10px;
+}
+
+.meta-item {
+    margin: 8px 0;
+    font-size: 0.95rem;
+    color: #34495e;
+}
+
+.badge-cat {
+    display: inline-block;
+    background: #3498db;
+    color: white;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+}
+
+/* --- ANIMATION --- */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateX(20px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+/* --- RESPONSIVE : Si l'écran est trop petit --- */
+@media (max-width: 900px) {
+    #info-display-zone {
+        display: none; /* Cache la bulle sur mobile/tablette pour ne pas gêner */
+    }
+}
