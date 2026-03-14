@@ -24,11 +24,12 @@ function ctrl_head()
     $font_color = $_SESSION['text_color'] ?? DEFAULT_FONT_COLOR;
     $border = $_SESSION['border'] ?? DEFAULT_BORDER;
 
-
+    $user_id = $_SESSION['id'] ?? null;
+    $user_role = $_SESSION['role'] ?? 'invité';
     $menu = get_menu();
     return join("\n", [
 
-        html_head($menu),
+        html_head($menu, $user_id, $user_role),
         html_settings_button(),
         form_start(),
         form_border($border),

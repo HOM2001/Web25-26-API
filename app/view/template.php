@@ -1,11 +1,21 @@
 <?php
 
-function html_head($menu_a=[])
+function html_head($menu_a=[],$user_id="",$user_role ="")
 {
     $debug = false;
 
+
+
+// Création de la variable pour le header
+    if ($user_id) {
+        $user_info_display = '<li class="user-info-menu">Bonjour ' . htmlspecialchars($user_id) . ', vous êtes l\'' . htmlspecialchars($user_role) . ' !</li>';
+    } else {
+        $user_info_display = '<li class="user-info-menu">Invité</li>';
+    }
     $menu_s = <<< HTML
+           
         <ul class="menu">
+ $user_info_display
 HTML;
     if(MENU_TYPE == "csv"){
         foreach( $menu_a as $menu_item)

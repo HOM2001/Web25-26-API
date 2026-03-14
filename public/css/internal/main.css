@@ -1124,3 +1124,10 @@ main article.main_article {
         display: none; /* Cache la bulle sur mobile/tablette pour ne pas gêner */
     }
 }
+/* Pour aligner le texte utilisateur à droite de la barre de menu */
+.user-info-menu {
+    padding: 15px 20px;
+    font-weight: bold;
+    color: #3498db;
+    border-right: 1px solid #555; /* Petite séparation visuelle */
+}

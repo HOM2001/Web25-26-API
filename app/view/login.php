@@ -1,79 +1,106 @@
 <?php
-
-/**
- * bouton logout à afficher
+/*
+ * Create a form with login log out option and close it then display it
  */
+
+
+
 function html_logout_button()
 {
-	ob_start();
-	?>
-    <a href="?page=login&action=logout">log out</a>
-    <!--<button type="submit" name="logout">log out</button>-->
-    <!--
-	Remarque : On peut aussi utiliser un hyper-lien pour se délogguer, par ex.
-	<a href="?action=logout">log out</a>
-	-->
-	<?php
-	return ob_get_clean();
-}
-
-/**
- * bouton login à afficher
- */
-function html_login_button($user="inconnu")
-{
-	ob_start();
-	?>
-    <a href="?page=login&action=login">log in</a>
+    ob_start();
+    ?>
+    <div class="container-fluid mb-3">
+        <a href="?page=login&action=logout">log out</a>
+    </div>
     <?php
-	return ob_get_clean();
+    return ob_get_clean();
 }
 
-/**
- * open form
- */
-function html_open_form()
-{
-	ob_start();
-	?>
-    <form method="post">
-	<?php
-	return ob_get_clean();
-}
-
-/**
- * close form
- */
-function html_close_form()
-{
-	ob_start();
-	?>
-    </form>
-	<?php
-	return ob_get_clean();
-}
-
-/**
- *
- */
 function html_unidentified_user()
 {
-	return <<< HTML
-        Identifiez-vous :
-        <input type="text" name="identifier">
-        <button type="submit">log in</button>
-    HTML;
+    if(AUTH_METHOD == "CSV") {
+        return html_unidentified_user_CSV();
+    }else if(AUTH_METHOD == "API") {
+        return html_unidentified_user_API();
+    }
+
 }
+function html_unidentified_user_CSV()
+{
+    return <<< HTML
+    <div class="col-mb-3">
+        <h3>Connectez-vous</h3>
+        <label for="identifier" class="form-label">Votre Identifiant</label>
+        <input type="text" class="form-control" name="identifier" placeholder="Identifiant">
+    </div>
+    <div class="mb-3">
+        <label for="password" class="form-label">Mot de passe</label>
+        <input type="password" class="form-control" name="password" placeholder="Mot de passe">
+    </div>
+    <div class="col-12">
+        <button type="submit" class="btn btn-primary">Connexion</button>
+    </div>
+HTML;
+
+}
+function html_unidentified_user_API()
+{
+    return <<< HTML
+    <br>
+        <h3>Connectez-vous</h3>
+        <div class="row justify-content-center">
+            <div class="col-5">
+                <label for="identifier" class="form-label">Pseudo</label>
+                <input type="text" class="form-control" name="identifier" placeholder="Pseudo">
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-5">
+                <label for="password" class="form-label">Mot de passe</label>
+                <input type="password" class="form-control" name="password" placeholder="Mot de passe">
+            </div>
+        </div>
+        <br>
+        <div class="row justify-content-center">
+            <div class="col-5">
+                <button type="submit" class="btn btn-primary">Connexion</button>
+            </div>
+        </div>
+HTML;
+}
+
 
 function html_link_home()
 {
-	ob_start();
-	?>
-    <p>
-        <a href=".">go to HOME</a>
-    </p>
-	<?php
-	return ob_get_clean();
+    ob_start();
+    ?>
+    <br>
+    <div class="container-fluid mb-3">
+        <p>
+            <a href=".">Aller à la page principale</a>
+        </p>
+    </div>
+    <?php
+    return ob_get_clean();
 }
 
-?>
+function html_open_form()
+{
+    ob_start();
+    ?>
+    <form method="post">
+    <div class="container">
+    <?php
+    return ob_get_clean();
+}
+
+
+function html_close_form()
+{
+    ob_start();
+    ?>
+    </div>
+    </form>
+    <?php
+    return ob_get_clean();
+}
