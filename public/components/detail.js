@@ -29,10 +29,10 @@ export const ArticleDetail = {
                 <div class="meta-item"><strong>Lecture :</strong> {{ details.temps_lecture }} min</div>
                 <div class="meta-item"><strong>Catégorie :</strong> {{ details.categorie }}</div>
 
-                <div v-if="userRole === 'admin'" class="admin-details" style="margin-top:10px; border-top:1px solid #ccc; pt:5px;">
-                    <p><strong>Titre complet :</strong> {{ details.title_art }}</p>
+                <div v-if="role === 'admin'" class="admin-details" style="margin-top:10px; border-top:1px solid #ccc; pt:5px;">
+                    <p><strong>Titre complet :</strong> {{ details.title }}</p>
                     <p><strong>Auteur :</strong> {{ details.auteur }}</p>
-                    <p><strong>ID Article :</strong> {{ details.ident_art }}</p>
+                    <p><strong>ID Article :</strong> {{ details.id }}</p>
                     <p><strong>ID Image :</strong> {{ details.image_id }}</p>
                 </div>
             </div>

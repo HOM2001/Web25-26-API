@@ -1055,8 +1055,8 @@ main article.main_article {
 #info-display-zone {
     /* Positionnement fixe sur l'écran */
     position: fixed;
-    top: 100px;         /* Ajuste selon la hauteur de ton header */
-    right: 20px;        /* Positionné à droite */
+    top: 212px;         /* Ajuste selon la hauteur de ton header */
+    right: 1px;        /* Positionné à droite */
     z-index: 9999;      /* Toujours au-dessus du reste */
 
     /* Taille et apparence */

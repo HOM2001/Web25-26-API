@@ -25,13 +25,13 @@ function main_login()
             $_SESSION['id'] = $id_user;
             $_SESSION['role'] = $role_user;
 
-            $msg = "Vous êtes connecté, bienvenue " . htmlspecialchars($_SESSION['id']) . ", vous êtes l'". $_SESSION['role'] . " du site! ";
         } else {
             unset($_SESSION['id']);
             unset($_SESSION['role']);
             $msg = "Identifiant ou mot de passe incorrect, veuillez réessayer.";
         }
     }
+
 
     $msg .= isset($_SESSION['id']) ? html_logout_button() : html_unidentified_user();
 
