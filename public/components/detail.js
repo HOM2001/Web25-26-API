@@ -6,32 +6,39 @@ export const ArticleDetail = {
         return {
             details: null,
             isLoading: false,
-            erreur_message: null
+            erreur_message: null,
+            role : null
         };
     },
 
     template: `
-    <div class= "card-feature" @mouseover="fetchDetails" @mouseleave="clearDetails">
+    <div class="card-feature" @mouseover="fetchDetails" @mouseleave="clearDetails">
         <h3>{{ title }}</h3>
-        <a :href="'?page=article&ident_art=' + id" class="card-link">
+        
         <div class="media-feature" v-if="image">
             <img :src="image" :alt="title">
         </div>
         
         <p>{{ hook }}</p>
 
-       <a :href="'?page=article&ident_art=' + id" class="read-more">En savoir plus</a>
-        <div v-if="isLoading">Chargement...</div>
+        <div v-if="isLoading">Chargement des détails...</div>
         
         <teleport to="#info-display-zone" v-if="details">
             <div class="fixed-details-content">
-                <span class="badge-cat">{{ details.categorie }}</span>
-                <div class="meta-item"><strong>✍Auteur :</strong> {{ details.auteur }}</div>
-                <div class="meta-item"><strong>Date :</strong> {{ details.date_creation.split('-').reverse().join('/') }}</div>
+                <div class="meta-item"><strong>Date :</strong> {{ details.date_creation }}</div>
+                <div class="meta-item"><strong>Lecture :</strong> {{ details.temps_lecture }} min</div>
+                <div class="meta-item"><strong>Catégorie :</strong> {{ details.categorie }}</div>
+
+                <div v-if="userRole === 'admin'" class="admin-details" style="margin-top:10px; border-top:1px solid #ccc; pt:5px;">
+                    <p><strong>Titre complet :</strong> {{ details.title_art }}</p>
+                    <p><strong>Auteur :</strong> {{ details.auteur }}</p>
+                    <p><strong>ID Article :</strong> {{ details.ident_art }}</p>
+                    <p><strong>ID Image :</strong> {{ details.image_id }}</p>
+                </div>
             </div>
         </teleport>
     </div>
-`,
+    `,
 
     methods: {
         fetchDetails() {
@@ -68,8 +75,8 @@ export const ArticleDetail = {
                 })
                 .then(json_data => {
                     console.log(json_data)
-                    // 3. Mise à jour des données
-                    this.details = json_data;
+                    this.details = json_data.article;
+                    this.role = json_data.role;
                 })
                 .catch(error => {
                     this.erreur_message = error.message;
