@@ -78,6 +78,8 @@ HTML;
         <link rel="stylesheet" href="./css/internal/main.css" />
         <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
         <script src="./js/quirks/QuirksMode.js"></script>
+        <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
     </head>
     <body>
     <header>

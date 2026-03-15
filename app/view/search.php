@@ -1,74 +1,22 @@
 <?php
-function html_search_form($reporters = [],$max_articles = 100)
+function html_search_view($reporters = [], $max_val = 100)
 {
-    $author_select_html = "";
+    // 1. On prépare les données PHP pour le JavaScript (JSON)
+    // On nettoie les noms des reporters pour le select de Vue
+    $json_reporters = json_encode(array_map(function($rep) {
+        return ['name' => $rep['name_rep'] ?? $rep['name'] ?? 'Inconnu'];
+    }, $reporters));
 
-    if (DATABASE_TYPE == "MySql") {
-        $options_reporters = '<option value="">Tous les auteurs</option>';
-        foreach ($reporters as $rep) {
-            $name = $rep['name_rep'] ?? $rep['name'] ?? 'Inconnu';
-            $options_reporters .= "<option value='$name'>$name</option>";
-        }
-
-        $author_select_html = <<< HTML
-            <div>
-                <label>Auteur :</label>
-                <select name="author">
-                    $options_reporters
-                </select>
-            </div>
-HTML;
-    }
+    // 2. Retour d'une seule chaîne HTML contenant le conteneur Vue
     return <<< HTML
-    <div class="search-page-layout">
-        <form method="post" action="?page=search" class="search-form">
-            <h3>Filtres de recherche</h3>
-            <div>
-                <label>Mot-clé :</label>
-                <input name="keyword" type="text" placeholder="Ex : France">
-            </div> 
-            {$author_select_html}
-            <div>
-                <label>Résultats max :</label>
-                <input name="limit" type="number" value="10" min="1" max="$max_articles">
-            </div>
-            <button type="submit">Lancer la recherche</button>    
-        </form>
-HTML;
-}
+    <div id="article-app">
+        <script>
+            window.REPORTERS = {$json_reporters};
+            window.MAX_VAL = {$max_val};
+        </script>
 
-function html_result_search($press_a)
-{
-    $count = count($press_a);
-    $url_param = (DATABASE_TYPE === "json") ? "id" : "ident_art";
-
-    $out = <<< HTML
-    <div class="result-column">
-        <h2>Articles trouvés ($count)</h2>
-        <ul class="result-list">
-HTML;
-
-    if (empty($press_a)) {
-        $out .= "<li>Aucun article ne correspond à votre recherche.</li>";
-    } else {
-        foreach ($press_a as $item) {
-            $title = $item['title_art'] ?? $item['title'] ?? 'Sans titre';
-            $id_art = $item['ident_art'] ?? $item['id'] ?? 0;
-
-            $out .= <<< HTML
-            <li>
-                <a href="?page=article&$url_param=$id_art">$title</a>
-            </li>
-HTML;
-        }
-    }
-
-    $out .= <<< HTML
-        </ul>
+        <search-composant></search-composant>
     </div>
-</div> 
+<script type="module" src="./public/components/app.js"></script>
 HTML;
-
-    return $out;
 }
-
