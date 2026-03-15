@@ -33,7 +33,7 @@ export const ArticleDetail = {
                     <p><strong>Titre complet :</strong> {{ details.title }}</p>
                     <p><strong>Auteur :</strong> {{ details.auteur }}</p>
                     <p><strong>ID Article :</strong> {{ details.id }}</p>
-                    <p><strong>ID Image :</strong> {{ details.image_id }}</p>
+                    <p><strong>ID Image :</strong> {{ details.id_image}}</p>
                 </div>
             </div>
         </teleport>
