@@ -26,20 +26,23 @@ function include_mvc_php_files()
 
 // ROUTER
 session_start();
-
 include_mvc_php_files();
 
-// select header type, ie. type of returned data, default is HTML text  "Content-Type: text/html; charset=UTF-8";
-$header = @$_REQUEST['returnType'] ?: 'text/html; charset=UTF-8';
+// 1. Liste des pages qui sont des API JSON (elles ne doivent pas charger de HTML)
+$api_pages = ['detail_fetch', 'favorite_fetch'];
 
-// select page to load, ie. function to call
-// making router more universal => using superglobal REQUEST instead of POST or GET
 $page = @$_REQUEST['page'] ?: 'home';
-if ($page === 'detail_fetch') {
-    // On appelle directement la fonction sans passer par le template HTML
-    echo detail_fetch();
-    exit; // <--- C'est ça qui empêche de charger le reste de la page
+
+// 2. Si c'est une page API, on exécute, on affiche et on quitte tout de suite
+if (in_array($page, $api_pages)) {
+    // On appelle la fonction correspondante (ex: detail_fetch() ou favorite_fetch())
+    // Assure-toi que tes fonctions dans les contrôleurs font bien un echo json_encode
+    call_user_func($page);
+    exit;
 }
+
+// 3. Sinon, c'est une page normale, on continue le chargement du site
+$header = @$_REQUEST['returnType'] ?: 'text/html; charset=UTF-8';
 $main = "main_{$page}";
 
 // OUTPUT
