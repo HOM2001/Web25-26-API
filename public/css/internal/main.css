@@ -36,7 +36,7 @@ header {
     text-align: center;
 }
 
-header h1 {
+.title {
     font-family: 'Georgia', serif; /* Un style "Journal" traditionnel ou 'Arial Black' pour du moderne */
     font-size: 3.5rem;
     font-weight: 900;
@@ -47,8 +47,24 @@ header h1 {
     /* Effet d'ombre portée pour donner de la profondeur sur le fond sombre */
     text-shadow: 2px 2px 0px rgba(0,0,0,0.5);
 
-    position: relative;
+
     display: inline-block;
+
+    /* Reste en haut de l'écran même au scroll */
+    position: sticky;
+    top: 0;
+
+    /* Indispensable pour que le header reste au-dessus des autres éléments */
+    z-index: 1000;
+
+    /* Ajoute un fond opaque, sinon on verra le texte de la page derrière quand tu descends */
+
+    /* Optionnel : un petit effet d'ombre pour le détacher du reste */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    background-color: #333;
+    padding: 30px 0; /* Un peu plus d'espace vertical pour laisser respirer le titre */
+    color: white;
+    text-align: center;
 }
 
 /* Liseré décoratif rappelant les journaux */

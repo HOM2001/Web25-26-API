@@ -81,7 +81,7 @@ HTML;
     </head>
     <body>
     <header>
-        <h1>
+        <h1 class="title">
             The Last News
         </h1>
         <?=$menu_s?>

@@ -11,7 +11,7 @@ window.showMore = function() {
 
     // On affiche les articles jusqu'à visibleCount (max 6)
     items.forEach((item, index) => {
-        if (index < visibleCount && index < 6) {
+        if (index < visibleCount && index < 7) {
             item.style.display = 'block';
         }
     });
@@ -33,7 +33,7 @@ window.showLess = function() {
 
     // On cache tout à partir du 3ème article (index 2)
     items.forEach((item, index) => {
-        if (index >= visibleCount) {
+        if (index >= visibleCount ) {
             item.style.display = 'none';
         }
     });

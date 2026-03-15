@@ -11,6 +11,7 @@ function main_article():string
     // view
 	return join( "\n", [
 		ctrl_head(),
+        html_banner(),
 		html_press_article($article_a),
 		html_foot(),
 	]);
