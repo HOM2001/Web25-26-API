@@ -792,6 +792,28 @@ main article.main_article {
     gap: 30px;
     padding: 20px;
 }
+/* Ajoute ceci à ton fichier CSS */
+.btn-fav {
+    padding: 8px 16px;
+    margin-top: 10px;
+    border: 1px solid #ddd;
+    border-radius: 20px;
+    background-color: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: bold;
+    display: inline-block;
+}
+
+.btn-fav:hover {
+    background-color: #f0f0f0;
+}
+
+.btn-fav.active {
+    background-color: #ffeaea;
+    border-color: #ffcccc;
+    color: #e60000;
+}
 
 .article-container {
     position: relative;

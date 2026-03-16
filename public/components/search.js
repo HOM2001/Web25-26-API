@@ -1,5 +1,5 @@
 export const SearchComponent = {
-    // Les données initiales (reporters et max) viennent de window (injectées par PHP)
+
     data() {
         return {
             keyword: '',
@@ -40,7 +40,7 @@ export const SearchComponent = {
                 <label>Résultats max :</label>
                 <input type="number" v-model="limit" @input="performSearch" min="1" :max="maxAvailable">
                 <small style="color: #666; font-size: 0.8em;">
-        Maximum disponible : {{ maxAvailable }} articles <br> (Si recherche avec auteur)
+        Maximum disponible : {{ maxAvailable }} articles <br> (Si recherche avec auteur) 
     </small>
             </div>
         </aside>
@@ -121,7 +121,6 @@ export const SearchComponent = {
 
     // Déclenche une première recherche au chargement pour afficher les articles par défaut
     mounted() {
-        console.log("Le composant Search est bien monté !");
         this.performSearch();
     }
 };

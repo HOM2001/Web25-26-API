@@ -32,13 +32,11 @@ function main_favorite():string
 
 
 
-    $articles_complets = get_panier();
 
 
 
     return join( "\n", [
        ctrl_head(),
-        html_panier_contenu($articles_complets),
         html_panier_favorite(),
         html_foot(),
     ]);

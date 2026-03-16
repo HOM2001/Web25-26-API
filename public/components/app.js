@@ -8,9 +8,10 @@ import { SearchComponent} from "./search.js";
 const app = createApp({
     components: {
         'article-detail': ArticleDetail,
-        'article-favoris'  : FavoriteButton,
+        'favorite-button'  : FavoriteButton,
         'search-composant' : SearchComponent
 
     }
 });
 app.mount('#article-app');
+console.log("Vue est monté")
