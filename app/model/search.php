@@ -19,6 +19,7 @@ function search($author='', $keyword = '', $limit = 10)
     elseif (DATABASE_TYPE === "MySql") {
         $params = [];
         $where_clauses = [];
+        $limit = (int)$limit;
 
         if (!empty($keyword)) {
             $where_clauses[] = "a.content_art LIKE :keyword";

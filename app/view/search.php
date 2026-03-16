@@ -1,13 +1,12 @@
 <?php
 function html_search_view($reporters = [], $max_val = 100)
 {
-    // 1. On prépare les données PHP pour le JavaScript (JSON)
-    // On nettoie les noms des reporters pour le select de Vue
-    $json_reporters = json_encode(array_map(function($rep) {
-        return ['name' => $rep['name_rep'] ?? $rep['name'] ?? 'Inconnu'];
-    }, $reporters));
+    $noms_reporters = array_map(function($rep) {
+        return $rep['name_rep'] ?? $rep['name'] ?? 'Inconnu';
+    }, $reporters);
 
-    // 2. Retour d'une seule chaîne HTML contenant le conteneur Vue
+    $json_reporters = json_encode($noms_reporters);
+
     return <<< HTML
     <div id="article-app">
         <script>
@@ -17,6 +16,8 @@ function html_search_view($reporters = [], $max_val = 100)
 
         <search-composant></search-composant>
     </div>
-<script type="module" src="./public/components/app.js"></script>
+
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script type="module" src="./components/app.js"></script>
 HTML;
 }

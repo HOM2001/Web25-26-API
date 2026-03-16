@@ -1,5 +1,5 @@
 // public/components/favorite_app.js
-export const FavoriteApp = {
+export const FavoriteButton = {
     data() {
         return {
             favoris: [] // Contiendra les IDs

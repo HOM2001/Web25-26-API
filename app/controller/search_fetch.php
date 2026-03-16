@@ -7,7 +7,6 @@ function search_fetch() {
 
     // On utilise ta fonction modèle existante
     $results = search($author, $keyword, $limit);
-
     // On répond proprement en JSON
     header('Content-Type: application/json');
     echo json_encode($results);

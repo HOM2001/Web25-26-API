@@ -13,7 +13,7 @@ export const SearchComponent = {
     },
 
     template: `
-    <div class="search-page-layout">
+   <div class="search-page-layout">
         <aside class="menu-lateral">
             <h3>Filtres de recherche</h3>
             
@@ -26,15 +26,15 @@ export const SearchComponent = {
                 <label>Auteur :</label>
                 <select v-model="author" @change="performSearch">
                     <option value="">Tous les auteurs</option>
-                    <option v-for="rep in reporters" :key="rep.name" :value="rep.name">
-                        {{ rep.name }}
+                    <option v-for="nom in reporters" :key="nom" :value="nom">
+                        {{ nom }}
                     </option>
                 </select>
             </div>
 
             <div class="field">
                 <label>Résultats max :</label>
-                <input type="number" v-model="limit" @input="performSearch" min="1" :max="100">
+                <input type="number" v-model="limit" @input="performSearch" min="1" max="100">
             </div>
         </aside>
 
@@ -61,43 +61,17 @@ export const SearchComponent = {
 
     methods: {
         performSearch() {
-            // Optionnel : ne pas chercher si le mot-clé est trop court
-            if (this.keyword.length > 0 && this.keyword.length < 2) return;
-
             this.isLoading = true;
-            this.erreur_message = null;
 
-            // 1. Préparation des paramètres (Identique à ton ArticleDetail)
-            const param = {
-                returnType: "application/json",
-                page: "search_fetch", // Ta route dans le routeur
-                keyword: this.keyword,
-                author: this.author,
-                limit: this.limit,
-                vuejs: true
-            };
+            // On construit l'URL avec les paramètres en GET
+            const url = `index.php?page=search_fetch&keyword=${encodeURIComponent(this.keyword)}&author=${encodeURIComponent(this.author)}&limit=${this.limit}`;
 
-            // 2. Requête FETCH avec POST
-            fetch(window.location.pathname, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded',
-                },
-                body: new URLSearchParams(param).toString(),
+            fetch(url, {
+                method: 'GET' // On passe en GET
             })
-                .then(response => {
-                    if (!response.ok) throw new Error(`Erreur HTTP : ${response.status}`);
-                    return response.json();
-                })
+                .then(response => response.json())
                 .then(json_data => {
-                    // On adapte selon la structure renvoyée par ton PHP
-                    // Si ton PHP renvoie directement le tableau : this.results = json_data;
-                    // Si ton PHP renvoie { articles: [...] } : this.results = json_data.articles;
-                    this.results = Array.isArray(json_data) ? json_data : (json_data.articles || []);
-                })
-                .catch(error => {
-                    this.erreur_message = "Erreur lors de la recherche";
-                    console.error('Problème avec fetch search:', error);
+                    this.results = json_data;
                 })
                 .finally(() => {
                     this.isLoading = false;
@@ -107,6 +81,7 @@ export const SearchComponent = {
 
     // Déclenche une première recherche au chargement pour afficher les articles par défaut
     mounted() {
+        console.log("Le composant Search est bien monté !");
         this.performSearch();
     }
 };
