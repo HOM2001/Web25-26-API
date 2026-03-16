@@ -711,71 +711,81 @@ main article.main_article {
         width: 100%;
     }
 }
-
-/* --- PANIER (LISTE DE LECTURE) --- */
-.panier-style {
-    background-color: #f9f9f9;
-    border: 2px dashed #d1d1d1;
-    border-radius: 8px;
+.favorite-stats-box {
+    background: #ffffff;
+    border: 1px solid #d1d9e0;
+    border-radius: 10px;
     padding: 20px;
-    max-width: 600px;
-    margin: 20px auto;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    margin: 20px 0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    width: 100%;
+    max-width: 450px;
 }
 
-.panier-style h2 {
-    color: #333;
-    border-bottom: 2px solid #333;
-    padding-bottom: 10px;
+.favorite-stats-box h3 {
     margin-top: 0;
-    text-transform: uppercase;
-    font-size: 1.2rem;
+    color: #2c3e50;
+    font-size: 1.25rem;
+    margin-bottom: 15px;
 }
 
-#panier_contenu {
+.favorite-stats-box ul {
     list-style: none;
     padding: 0;
+    margin: 15px 0;
 }
 
-#panier_contenu li {
+/* Ligne d'un favori dans le résumé */
+.favorite-stats-box li {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: white;
-    padding: 10px 15px;
-    margin-bottom: 8px;
-    border-radius: 4px;
-    border-left: 5px solid #2ecc71;
-    transition: 0.2s;
+    padding: 8px 0;
+    border-bottom: 1px solid #f0f0f0;
+    font-size: 0.95rem;
 }
 
-#panier_contenu li:hover { transform: translateX(5px); }
-
-.read-time-badge {
-    background: #e8f5e9;
-    color: #2e7d32;
-    padding: 2px 8px;
-    border-radius: 12px;
-    font-size: 0.8rem;
-    font-weight: bold;
-    margin-right: 15px;
+.favorite-stats-box li:last-child {
+    border-bottom: none;
 }
 
+/* Bouton 'X' dans la liste */
 .btn-remove-fav {
-    background: #ff4d4d;
-    color: white !important;
-    padding: 5px 12px;
+    background: #ff5e5e;
+    color: white;
+    border: none;
     border-radius: 4px;
+    width: 22px;
+    height: 22px;
+    cursor: pointer;
+    font-size: 0.7rem;
     font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
 }
 
-.btn-remove-fav::before { content: "✕"; }
+.btn-remove-fav:hover {
+    background: #e63946;
+}
 
+/* Bouton Vider le panier */
 .btn-delete {
-    display: inline-block;
+    background: #6c757d;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 5px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+    width: 100%;
     margin-top: 10px;
-    color: #888;
-    font-size: 0.8rem;
+}
+
+.btn-delete:hover {
+    background: #5a6268;
 }
 
 /* --- SECTION CATALOGUE FAVORIS (GRILLE) --- */
