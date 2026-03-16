@@ -1183,3 +1183,86 @@ main article.main_article {
     color: #3498db;
     border-right: 1px solid #555; /* Petite séparation visuelle */
 }
+
+/* --- CONSEILS : Structure globale --- */
+.doc-container {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 20px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #333;
+}
+
+/* --- EN-TÊTE --- */
+.doc-header {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.doc-main-title {
+    font-size: 2.5rem;
+    color: #2c3e50;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* --- GRILLE DE CARTES --- */
+.doc-grid-wrapper {
+    width: 100%;
+}
+
+.doc-cards-grid {
+    display: grid;
+    /* Adapte automatiquement le nombre de colonnes selon la largeur */
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 25px;
+}
+
+/* --- STYLE DES CARTES --- */
+.doc-card {
+    background: #ffffff;
+    border: 1px solid #e1e1e1;
+    border-radius: 12px;
+    padding: 25px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.doc-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 15px rgba(0,0,0,0.1);
+    border-color: #007bff;
+}
+
+.doc-card-title {
+    font-size: 1.3rem;
+    color: #007bff;
+    margin-top: 0;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #f0f0f0;
+}
+
+/* --- LISTE DES FONCTIONNALITÉS --- */
+.doc-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.doc-list li {
+    padding: 8px 0;
+    border-bottom: 1px solid #f9f9f9;
+    font-size: 0.95rem;
+    line-height: 1.4;
+}
+
+.doc-list li strong {
+    color: #444;
+}
+
+/* --- RESPONSIVITÉ --- */
+@media (max-width: 600px) {
+    .doc-main-title { font-size: 1.8rem; }
+    .doc-card { padding: 15px; }
+}
