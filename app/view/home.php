@@ -36,10 +36,10 @@ $out = '<div id="article-app" class="container-home">';
         <div class="grid-features">';
             foreach ($features as $art) {
             $id = $art['ident_art'] ?? $art['id'];
-            $title = htmlspecialchars($art['title_art'] ?? $art['title']);
+            $title = htmlspecialchars($art['title_art'] ?? $art['title'],ENT_QUOTES);
             $image = $art['image_art'] ?? "default.jpg";
             $media_path_lead = MEDIA_PATH . $image;
-            $hook = htmlspecialchars($art['hook_art'] ?? $art['hook'] ?? "");
+            $hook = htmlspecialchars($art['hook_art'] ?? $art['hook'] ?? "",ENT_QUOTES);
             $out .= "<article-detail :id='{$id}' title='{$title}' image='{$media_path_lead}' hook='$hook' ></article-detail>";
             }
             $out .= '</div></section>';
@@ -54,8 +54,8 @@ $out = '<div id="article-app" class="container-home">';
 
     foreach ($sidebar as $art) {
         $id = $art['ident_art'] ?? $art['id'];
-        $title = htmlspecialchars($art['title_art'] ?? $art['title']);
-        $hook = htmlspecialchars($art['hook_art'] ?? $art['hook'] ?? "");
+        $title = htmlspecialchars($art['title_art'] ?? $art['title'],ENT_QUOTES);
+        $hook = htmlspecialchars($art['hook_art'] ?? $art['hook'] ?? "",ENT_QUOTES);
         $hook_sidebar = limit_words($hook, LIMIT_WORD_SIDEBAR);
 
         $out .= "<div><article-detail :id='{$id}' title='\"{$title}\"' hook='\"{$hook_sidebar}\"'></article-detail></div>";
