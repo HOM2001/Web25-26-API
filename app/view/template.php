@@ -8,14 +8,26 @@ function html_head($menu_a=[],$user_id="",$user_role ="")
 
 // Création de la variable pour le header
     if ($user_id) {
-        $user_info_display = '<li class="user-info-menu">Bonjour ' . htmlspecialchars($user_id) . ', vous êtes l\'' . htmlspecialchars($user_role) . ' !</li>';
+        $user_info_display = '
+    <li class="user-info-menu">
+        <span class="user-info-text">Bonjour ' . htmlspecialchars($user_id) . ', vous êtes l\'' . htmlspecialchars($user_role) . ' !</span>
+    </li>
+    <li>
+        <a href="?page=login&action=logout" class="btn-action btn-logout">Déconnexion</a>
+    </li>';
     } else {
-        $user_info_display = '<li class="user-info-menu">Invité</li>';
+        $user_info_display = '
+    <li class="user-info-menu">
+        <span class="user-info-text">Non connecté ! </span>
+    </li>
+    <li>
+        <a href="?page=login" class="btn-action btn-login">Connexion</a>
+    </li>';
     }
     $menu_s = <<< HTML
            
         <ul class="menu">
- $user_info_display
+
 HTML;
     if(MENU_TYPE == "csv"){
         foreach( $menu_a as $menu_item)
@@ -65,7 +77,7 @@ HTML;
        <a href="?action=toggle_display" class="btn-toggle-view">$btn_text</a>
        </li>
 HTML;
-
+   $menu_s .= $user_info_display;
     $menu_s .= "</ul>";
 
     ob_start();

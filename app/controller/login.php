@@ -4,41 +4,44 @@ function main_login()
     $action = $_GET['action'] ?? "";
     $msg = '';
 
-
+    // 1. GESTION DE LA DÉCONNEXION (Redirection immédiate)
     if ($action === 'logout') {
-
         session_unset();
         session_destroy();
-        $msg = 'Vous êtes déconnecté.';
+        // Redirection vers la home après déconnexion
+        header('Location: index.php?page=home');
+        exit();
     }
 
+    // 2. GESTION DE LA CONNEXION (POST)
     $login = $_POST['identifier'] ?? '';
     $password = $_POST['password'] ?? '';
 
-    // GESTION DU LOGIN (CONNEXION)
     if ($login && $password) {
-        // Appelle ta fonction de vérification (qui doit faire le relais serveur-serveur)
         list($valide, $id_user, $role_user) = check_login($login, $password);
 
         if ($valide) {
-
             $_SESSION['id'] = $id_user;
             $_SESSION['role'] = $role_user;
-
+            // Optionnel : Redirection vers home après connexion réussie
+            header('Location: index.php?page=home');
+            exit();
         } else {
             unset($_SESSION['id']);
             unset($_SESSION['role']);
-            $msg = "Identifiant ou mot de passe incorrect, veuillez réessayer.";
+            $msg = "<p style='color:red;'>Identifiant ou mot de passe incorrect.</p>";
         }
     }
 
-
-    $msg .= isset($_SESSION['id']) ? html_logout_button() : html_unidentified_user();
+    // 3. AFFICHAGE DU FORMULAIRE
+    // Si l'utilisateur est connecté, on affiche le bouton logout, sinon le formulaire
+    $content = isset($_SESSION['id']) ? html_logout_button() : html_unidentified_user();
 
     return join("\n", [
         ctrl_head(),
         html_open_form(),
         $msg,
+        $content,
         html_link_home(),
         html_close_form(),
         html_foot()
