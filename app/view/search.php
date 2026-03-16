@@ -6,13 +6,18 @@ function html_search_view($reporters = [], $max_val = 100)
     }, $reporters);
 
     $json_reporters = json_encode($noms_reporters);
+    $top_reporter = get_top_reporter();
+    $max_val = ($top_reporter && isset($top_reporter[0]['nb_articles']))
+        ? $top_reporter[0]['nb_articles']
+        : DEFAULT_LIMIT;
+
 
     return <<< HTML
     <div id="article-app">
         <script>
             window.REPORTERS = {$json_reporters};
-            window.MAX_VAL = {$max_val};
-        </script>
+            window.MAX_VAL = $max_val;  
+       </script>
 
         <search-composant></search-composant>
     </div>

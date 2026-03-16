@@ -4,11 +4,15 @@ export const SearchComponent = {
         return {
             keyword: '',
             author: '',
-            limit: window.MAX_VAL || 10,
+            limit : 10,
+            maxAvailable: window.MAX_VAL,
             reporters: window.REPORTERS || [],
+            mediaPath : './media/',
             results: [],
             isLoading: false,
-            erreur_message: null
+            erreur_message: null,
+            selectedArticle: null, // Sera rempli par l'article cliqué
+            isLoadingArticle: false
         };
     },
 
@@ -34,7 +38,10 @@ export const SearchComponent = {
 
             <div class="field">
                 <label>Résultats max :</label>
-                <input type="number" v-model="limit" @input="performSearch" min="1" max="100">
+                <input type="number" v-model="limit" @input="performSearch" min="1" :max="maxAvailable">
+                <small style="color: #666; font-size: 0.8em;">
+        Maximum disponible : {{ maxAvailable }} articles <br> (Si recherche avec auteur)
+    </small>
             </div>
         </aside>
 
@@ -46,7 +53,7 @@ export const SearchComponent = {
             
             <ul v-if="!isLoading && results.length > 0" class="result-list">
                 <li v-for="art in results" :key="art.ident_art || art.id">
-                    <a :href="'?page=article&ident_art=' + (art.ident_art || art.id)">
+                   <a href="#" @click.prevent="loadArticle(art.ident_art || art.id)" style="cursor: pointer;">
                         {{ art.title_art || art.title || 'Sans titre' }}
                     </a>
                 </li>
@@ -56,7 +63,28 @@ export const SearchComponent = {
                 Aucun article ne correspond à votre recherche.
             </p>
         </main>
-    </div>
+        </div>
+        
+        <div v-if="selectedArticle" class="article-detail-view">
+    <article class="main_article">
+        <h2>{{ selectedArticle.title_art || selectedArticle.title }}</h2>
+        
+        <div v-if="selectedArticle.image_art">
+            <img :src="mediaPath + selectedArticle.image_art" :alt="selectedArticle.title_art">
+        </div>
+        
+        <p><strong>{{ selectedArticle.hook_art || selectedArticle.hook }}</strong></p>
+        
+        <div class="article-content">
+            <div v-html="selectedArticle.content_art || selectedArticle.contents"></div>
+        </div>
+
+        <div class="navigation-back">
+            <button @click="selectedArticle = null" class="btn-back">Fermer</button>
+        </div>
+    </article>
+        </div>
+    
     `,
 
     methods: {
@@ -75,6 +103,18 @@ export const SearchComponent = {
                 })
                 .finally(() => {
                     this.isLoading = false;
+                });
+        },
+        loadArticle(artId) {
+            this.isLoadingArticle = true;
+            fetch(`index.php?page=article_fetch&ident_art=${artId}`)
+                .then(response => response.json())
+                .then(data => {
+                    this.selectedArticle = data;
+                    this.isLoadingArticle = false;
+                    this.$nextTick(() => {
+                        window.scrollTo({ top: document.querySelector('.article-detail-view').offsetTop, behavior: 'smooth' });
+                    });
                 });
         }
     },
