@@ -7,27 +7,31 @@ export const ReadtimeCounter = {
         };
     },
     methods: {
-        checkArticles() {
-            console.log("Action : Clic sur bouton"); // Pour vérifier si ça répond
+        async fetchArticles() {
+            if (this.inputTime < 0) return;
             this.loading = true;
-            fetch(`index.php?page=readtime_fetch&time=${this.inputTime}`)
-                .then(r => r.json())
-                .then(data => {
-                    this.articleCount = data.count;
-                    this.loading = false;
-                })
-                .catch(() => this.loading = false);
+            try {
+                const response = await fetch(`index.php?page=readtime_fetch&time=${this.inputTime}`);
+                const data = await response.json();
+                this.articleCount = data.count;
+            } catch (e) {
+                console.error("Erreur:", e);
+                this.articleCount = 0;
+            } finally {
+                this.loading = false;
+            }
         }
     },
     template: `
-    <div class="countArticle">
-        <label>Temps de lecture :</label>
-        <input type="number" v-model.number="inputTime" min="0">
-        <button type="button" @click="checkArticles" class="btn-check">
-            Afficher
-        </button>
-        <div v-if="articleCount !== null">
-            {{ articleCount }} articles
+        <div class="readtime-footer-widget">
+            <label>Temps de lecture :</label>
+            <input type="number" v-model.number="inputTime" min="0" >
+            <button type="button" @click="fetchArticles" class="btn-readtime">
+                Afficher
+            </button>
+            <span v-if="articleCount !== null" >
+                {{ loading ? '...' : articleCount + ' article(s)' }}
+            </span>
         </div>
-    </div>`
+    `
 };
