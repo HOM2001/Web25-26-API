@@ -1298,3 +1298,62 @@ main article.main_article {
     .doc-main-title { font-size: 1.8rem; }
     .doc-card { padding: 15px; }
 }
+/* Conteneur global du footer */
+.main-footer {
+    display: flex;
+    justify-content: space-between; /* Espace entre la gauche et la droite */
+    align-items: flex-end; /* Aligne le contenu en bas */
+    padding: 20px 40px;
+    background: #333;
+    color: white;
+    border-top: 3px solid #3498db;
+}
+
+/* Le widget de lecture à gauche */
+#readtime-app {
+    flex: 0 1 250px; /* Ne prend pas toute la place, max 250px */
+    text-align: left;
+}
+
+.countArticle {
+    background: rgba(255, 255, 255, 0.1); /* Fond légèrement transparent */
+    padding: 15px;
+    border-radius: 8px;
+    border-left: 4px solid #3498db;
+}
+
+.countArticle label {
+    display: block;
+    font-size: 0.8rem;
+    margin-bottom: 5px;
+    color: #3498db;
+    font-weight: bold;
+}
+
+/* Style des inputs dans le footer */
+.countArticle input {
+    width: 60px;
+    background: #444;
+    border: 1px solid #555;
+    color: white;
+    padding: 4px;
+    border-radius: 4px;
+}
+
+#readtime-app button.btn-check {
+    display: inline-block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    background-color: #3498db !important; /* Bleu flash pour le voir */
+    color: white !important;
+    border: 1px solid white !important;
+    padding: 5px 10px !important;
+    position: relative !important;
+    z-index: 9999 !important;
+}
+
+/* La partie crédits (droite) */
+.footer-content {
+    flex: 1;
+    text-align: right;
+}

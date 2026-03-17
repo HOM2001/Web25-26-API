@@ -29,7 +29,7 @@ session_start();
 include_mvc_php_files();
 
 // 1. Liste des pages qui sont des API JSON (elles ne doivent pas charger de HTML)
-$api_pages = ['detail_fetch', 'favorite_fetch','search_fetch'];
+$api_pages = ['detail_fetch', 'favorite_fetch','search_fetch','readtime_fetch'];
 
 $page = @$_REQUEST['page'] ?: 'home';
 

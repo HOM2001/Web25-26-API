@@ -18,3 +18,13 @@ function get_articles_by_time($minutes)
 
     return db_select_prepare($sql, $params);
 }
+function count_articles_by_time($minutes) {
+
+    $sql = "Select count(a.id_art)
+from t_article a
+where a.readtime_art IS NOT NULL AND a.readtime_art = :minutes";
+
+    $params = ['minutes' => $minutes];
+
+    return db_select_prepare($sql, $params);
+}

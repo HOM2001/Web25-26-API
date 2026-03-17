@@ -25,8 +25,8 @@ function html_head($menu_a=[],$user_id="",$user_role ="")
     </li>';
     }
     $menu_s = <<< HTML
-           
         <ul class="menu">
+      
 
 HTML;
     if(MENU_TYPE == "csv"){
@@ -128,17 +128,24 @@ function form_end(){
 }
 function html_foot()
 {
+
     $annee = date('Y');
 
     return <<< HTML
-    <footer class="main-footer">
-        <div class="footer-content">
+
+    <footer class="main-footer"><div id="readtime-app">
+         <reading-time-counter></reading-time-counter>
+         </div>
+        <div class="footer-content"> 
+        
             <p>&copy; $annee - Tous droits réservés</p>
             <p class="credits">
                 Développé avec passion par <strong>Hamid Owaiss</strong> & <strong>Imane Amane</strong> <br> Avec le framework AWebZiz de Monsieur <Strong>Alain Wafflard</Strong>
             </p>
         </div>
     </footer>
+      <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script type="module" src="./components/app.js"></script>
 </body>
 </html>
 HTML;
